@@ -15,8 +15,20 @@ class DeclaracaoVariaveisDecimalFormatado
 		*/
 		Console.WriteLine("Minha quantia = {0:C}",x);
 		Console.WriteLine("Sua quantia = {0:C}",y);
-		
 		Console.WriteLine("Valor de x = {0:F3} e Valor de y = {1:C}",x,y);
+		
+		/*
+		Interpolação de String,só funciona no .Net versão 6.0 acima
+		*/
+		/*
+		Console.WriteLine("Minha quantia = {0:C}",x);
+		Console.WriteLine("Sua quantia = {0:C}",y);
+		Console.WriteLine("Valor de x = {0:F3} e Valor de y = {1:C}",x,y);
+		
+		Console.WriteLine($"Minha quantia = {x:C}");
+		Console.WriteLine($"Sua quantia = {y:C}");
+		Console.WriteLine($"Valor de x = {x:F3} e Valor de y = {y:C}");
+		*/
 	}
 
 }
