@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace _08_ValidaCPF
 {
@@ -7,68 +11,113 @@ namespace _08_ValidaCPF
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Digite seu CPF:");
+            Console.Write("Digite o CPF: ");
+
             string cpf = Console.ReadLine();
 
-            string cpfLimpo = Regex.Replace(cpf, "[^0-9]", "");
+            // 1 - Eliminar caractres não numéricos
 
-            if (cpfLimpo.Length != 11)
+            //cpf.replace("'.", "");
+
+            //cpf.Replace("'-", "");
+
+            cpf = Regex.Replace(cpf, "[^0-9]", "");
+
+            // 2 - Validar se tem 11 digitos
+
+            if (cpf.Length != 11)
+
             {
-                Console.WriteLine("Cpf digitado : " + cpf);
-                Console.WriteLine("Somente números: " + cpfLimpo);
+
+                Console.WriteLine("CPF deve conter 11 digitos");
+
+                return;
+
+            }
+
+            // 3- Validas CPFs com todos os números iguais
+
+            /* if( cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" ||
+
+                 cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" ||
+
+                 cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999"                 
+
+             )*/
+
+            if (cpf.Distinct().Count() == 1)
+
+            {
+
+                Console.WriteLine("CPF inválido! Números repetidos não são permitidos");
+
+                return;
+
+            }
+
+            //4 - Cálculo do 1º Digito verificador
+
+            int digX = CalculaDV(cpf, 9, 10);
+
+            //5 - Cálculo do 2º Digito Verificador
+
+            int digY = CalculaDV(cpf, 10, 11);
+
+            //6 - Comparar os dígitos
+
+            if (
+
+                int.Parse(cpf[9].ToString()) == digX &&
+
+                int.Parse(cpf[10].ToString()) == digY
+
+               )
+
+            {
+
+                Console.WriteLine("CPF VÁLIDO!");
+
             }
 
             else
+
             {
-                Console.WriteLine("Cpf Inválido! o campo deve conter 11 dígitos.");
+
+                Console.WriteLine("CPF INVÁLIDO!");
+
             }
 
-            if (cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" ||
-                cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" ||
-                cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999"
-            )
-            {
-                Console.WriteLine("Cpf Inválido! Números repetidos não são permitidos");
-                return;
-            }
+        }
+
+        public static int CalculaDV(string cpf, int qtdeNumeros, int peso)
+
+        {
 
             int soma = 0;
+
             char[] cpfVetor = cpf.ToCharArray();
 
-            for ( int i = 0; i < 9; i++) 
+            for (int i = 0; i < qtdeNumeros; i++)
+
             {
-                soma += int.Parse(cpfVetor[1].ToString()) * (10 - i);
+
+                soma += int.Parse(cpfVetor[i].ToString()) * (peso - i);
+
             }
 
             int resto = soma % 11;
 
-            int digX = 0;
-            if (resto >= 0)
-            {
-                digX = 11 - resto;
-            }
+            int digito = 0;
 
-            resto = soma % 11;
-
-            int digY = 0;
             if (resto >= 2)
+
             {
-                digY = 11 - resto;
+
+                digito = 11 - resto;
+
             }
 
-            if(
-                int.Parse(cpf[9].ToString()) == digX && 
-                int.Parse(cpf[10].ToString()) == digY
-                )
-            {
-                Console.WriteLine("CPF Válido! ");
-            }
-            else
-            {
-                Console.WriteLine("CPF Inválido!");
-            }
-
-
+            return digito;
 
         }
     }

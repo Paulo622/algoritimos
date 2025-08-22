@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{112C17C6-239D-4A67-82E8-3A55B9911C37}</ProjectGuid>
+    <ProjectGuid>{448CBA7C-BD47-4D06-B319-3FC40E682E3C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>_08_ValidaCPF</RootNamespace>
     <AssemblyName>08_ValidaCPF</AssemblyName>
