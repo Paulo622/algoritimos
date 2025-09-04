@@ -97,6 +97,8 @@ namespace _01_DeclaracaoClasse
         {
             Console.WriteLine($"Triângulo com base de {Base} e altura de {Altura} possui uma área de {CalcularArea()}");
         }
+
+
     }
 }
     
