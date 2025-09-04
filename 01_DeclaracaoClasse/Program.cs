@@ -34,6 +34,16 @@ namespace _01_DeclaracaoClasse
             obj5.Base = 8;
             obj5.Altura = 6;
             obj5.ImprimeArea();
+
+            Conta minhaConta = new Conta(001, "1234-5", "67890-1", 1000.00m, 500.00m);
+            Console.WriteLine($"Saldo inicial: {minhaConta.ConsultarSaldo():C}");
+            minhaConta.Depositar(250.00m);
+
+            Decimal valorSaque = 300.00m;
+            minhaConta.Sacar(valorSaque);
+            Console.WriteLine($"Saldo final: {minhaConta.ConsultarSaldo():C}");
+
+            
         }
     }
 
@@ -100,5 +110,61 @@ namespace _01_DeclaracaoClasse
 
 
     }
+
+    public class Conta
+    {
+        public int Banco { get; set; }
+        public string Agencia { get; set; }
+        public string Numero { get; set; }
+
+        public decimal Saldo { get; private set; }
+        public decimal Limite { get; set; }
+
+        public Conta(int banco, string agencia, string numero, decimal saldoInicial = 0.00m, decimal limite = 0.00m)
+        {
+            Banco = banco;
+            Agencia = agencia;
+            Numero = numero;
+            Saldo = saldoInicial;
+            Limite = limite;
+        }
+
+        public void Depositar(decimal valor)
+        {
+            if (valor <= 0)
+            {
+                Console.WriteLine("O valor do depósito deve ser maior que zero.");
+                return;
+            }
+
+            Saldo += valor;
+            Console.WriteLine($"Depósito de {valor:C} realizado. Novo saldo: {Saldo:C}");
+        }
+
+        public void Sacar(decimal valor)
+        {
+            if (valor <= 0)
+            {
+                Console.WriteLine("O valor do saque deve ser maior que zero.");
+                return;
+            }
+
+            if (Saldo + Limite >= valor)
+            {
+                Saldo -= valor;
+                Console.WriteLine($"Saque de {valor:C} realizado. Novo saldo: {Saldo:C}");
+            }
+            else
+            {
+                Console.WriteLine("Saldo insuficiente para saque.");
+            }
+        }
+
+        public decimal ConsultarSaldo()
+        {
+            return Saldo;
+        }
+    }
+
+
 }
-    
