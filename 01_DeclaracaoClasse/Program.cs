@@ -43,7 +43,30 @@ namespace _01_DeclaracaoClasse
             minhaConta.Sacar(valorSaque);
             Console.WriteLine($"Saldo final: {minhaConta.ConsultarSaldo():C}");
 
-            
+            Decimal valorSaque2 = 2000.00m;
+            minhaConta.Sacar(valorSaque2);
+
+            Aluno aluno1 = new Aluno();
+            aluno1.código = 1;
+            aluno1.nome = "João Silva";
+
+            aluno1.LancarNota();
+            Console.WriteLine($"Aluno {aluno1.nome} está {aluno1.Menção()}");
+            aluno1.notas[0] = 4.0;
+
+            aluno1.LancarNota();
+            Console.WriteLine($"Aluno {aluno1.nome} está {aluno1.Menção()}");
+            aluno1.notas[1] = 5.0;
+
+            aluno1.LancarNota();
+            Console.WriteLine($"Aluno {aluno1.nome} está {aluno1.Menção()}");
+            aluno1.notas[2] = 6.0;
+
+            aluno1.LancarNota();
+            Console.WriteLine($"Aluno {aluno1.nome} está {aluno1.Menção()}");
+            aluno1.notas[3] = 7.0;
+            Console.ReadKey();
+
         }
     }
 
@@ -113,51 +136,30 @@ namespace _01_DeclaracaoClasse
 
     public class Conta
     {
-        public int Banco { get; set; }
-        public string Agencia { get; set; }
-        public string Numero { get; set; }
+        public int Banco;
+        public string Agencia;
+        public string Numero;
 
-        public decimal Saldo { get; private set; }
-        public decimal Limite { get; set; }
+        public decimal Saldo;
+        public decimal Limite;
 
-        public Conta(int banco, string agencia, string numero, decimal saldoInicial = 0.00m, decimal limite = 0.00m)
+        public Conta(int banco, string agencia, string numero, decimal saldo, decimal limite)
         {
             Banco = banco;
             Agencia = agencia;
             Numero = numero;
-            Saldo = saldoInicial;
+            Saldo = saldo;
             Limite = limite;
         }
 
         public void Depositar(decimal valor)
         {
-            if (valor <= 0)
-            {
-                Console.WriteLine("O valor do depósito deve ser maior que zero.");
-                return;
-            }
-
             Saldo += valor;
-            Console.WriteLine($"Depósito de {valor:C} realizado. Novo saldo: {Saldo:C}");
         }
 
         public void Sacar(decimal valor)
         {
-            if (valor <= 0)
-            {
-                Console.WriteLine("O valor do saque deve ser maior que zero.");
-                return;
-            }
-
-            if (Saldo + Limite >= valor)
-            {
-                Saldo -= valor;
-                Console.WriteLine($"Saque de {valor:C} realizado. Novo saldo: {Saldo:C}");
-            }
-            else
-            {
-                Console.WriteLine("Saldo insuficiente para saque.");
-            }
+            Saldo -= valor;
         }
 
         public decimal ConsultarSaldo()
@@ -166,5 +168,46 @@ namespace _01_DeclaracaoClasse
         }
     }
 
+    public class Aluno 
+    {
+        public int código;
 
+        public string nome;
+
+        public double[] notas = { 9.6, 8.0, 9.5, 10.0 }; // Declara e inicializa com 4 valores = new double [4];
+
+        public double CalcularMedia()
+        {
+            double soma = 0;
+            for (int i = 0; i < notas.Length; i++)
+            {
+                soma += notas[i];
+            }
+            return soma / notas.Length;
+        }
+
+        public void LancarNota()
+        {
+            Console.WriteLine($"Aluno {nome} possui média {CalcularMedia()}");
+        }
+
+        public string Menção()
+        {
+            double media = CalcularMedia();
+            if (media >= 5)
+            {
+                return "Aprovado";
+            }
+            else if (media >= 5)
+            {
+                return "Recuperação";
+            }
+            else
+            {
+                return "Reprovado";
+            }
+
+            
+        }
+    }
 }
